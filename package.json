@@ -1,0 +1,22 @@
+{
+  "name": "AT",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run create -- --watch",
+    "create": "wt create index --bundle"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "africastalking": "0.0.10",
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.15.5",
+    "mongoose": "^4.11.13",
+    "pusher": "^1.5.1",
+    "webtask-tools": "^3.2.0"
+  }
+}

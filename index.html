@@ -1,0 +1,60 @@
+<html>
+
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.css">
+    <style>
+      #app {
+        
+        padding-top: 70px;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <div id="app" class="container">
+      <table class="table table-striped">
+          <tr>
+              <th>Name</th>
+              <th>Phone</th>
+          </tr>
+          <tr v-for="client in clients">
+            <td>{{client.name}}</td>
+            <td>{{client.phoneNumber}}</td>
+          </tr>
+      </table>
+    </div>
+    <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.4/vue.js"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data() {
+          return {
+            clients: null
+          };
+        },
+        created() {
+          axios.get('/ussd')
+            .then(({data}) => {
+              this.clients = data;
+            })
+          
+          /* Pusher */
+          Pusher.logToConsole = true;
+
+          var pusher = new Pusher('f19e6924cabe84b0e77d', {
+            cluster: 'eu',
+            encrypted: true
+          });
+
+          var channel = pusher.subscribe('AT');
+          channel.bind('request', (data) => {
+            console.log(data)
+            this.clients.unshift(data);
+          });
+        }    
+      })
+    </script>
+  </body>
+</html>
